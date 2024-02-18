@@ -10,8 +10,13 @@ def home(request):
             sandbox.add()
         elif 'btn-newprint' in request.POST:
             print('btn-new')
-            print(sandbox.sandbox)
         elif 'btn-delete' in request.POST:
             print('btn-del')
-    print(sandbox.sandbox)
+            sandbox.delete()
+        else:
+            for item in sandbox.sandbox:
+                if f"btn-question-{item['id']}" in request.POST:
+                    print(f"btn-question-{item['id']}")
+                    sandbox.activate(question_id=item['id'])
+                    break
     return render(request, 'main/index.html', context={'sandbox': sandbox})

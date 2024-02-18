@@ -46,17 +46,13 @@
             {% csrf_token %}
         <div class="row border">
             <div class="col-auto px-0">
-                <button type="submit" class="btn-primary border-0" name="btn-tablet">
+                <button type="submit" class="btn-secondary border-0" name="btn-tablet">
                     <img src="{% static 'main/tablet.png' %}" height="40px" class="img" alt="Responsive image" >
                 </button>
             </div>
+            
             <div class="col-auto px-0">
-                <button type="submit" class="btn-primary border-0" name="btn-newprint">
-                    <img src="{% static 'main/newprint.png' %}" height="40px" class="img" alt="Responsive image">
-                </button>
-            </div>
-            <div class="col-auto px-0">
-                <button type="submit" class="btn-primary border-0" name="btn-delete">
+                <button type="submit" class="btn-secondary border-0" name="btn-delete">
                     <img src="{% static 'main/delete.png' %}" height="40px" class="img" alt="Responsive image">
                 </button>
             </div>
@@ -71,10 +67,15 @@
             {% for sand in sandbox.sandbox %}
                 {% if sand.craft is None %}
                     <div class="col-auto px-0">
-                <button type="submit" class="btn-primary border-0" name="btn-1">
-                    <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
-                </button>
-            </div>
+                        {% if sand.active%}
+                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ sand.id }}">
+                        {% else %}
+                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ sand.id }}">
+                        {% endif %} 
+                                <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
+                            </button>
+                         
+                    </div>
                 {% else %}
                     CRAFT
                 {% endif %}
@@ -82,6 +83,14 @@
             </div>
         </form>
         </div>
+       
 </div>
+    <div class="col">
+            <div class="col-auto px-0">
+                <button type="submit" class="btn-secondary border-0" name="btn-newprint">
+                    <img src="{% static 'main/newprint.png' %}" height="40px" class="img" alt="Responsive image">
+                </button>
+            </div>
+    </div>
 </div>
 {% endblock body %}
