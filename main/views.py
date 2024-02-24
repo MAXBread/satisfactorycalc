@@ -1,4 +1,6 @@
 from django.shortcuts import render
+
+from .models import Recipe
 from .sandbox import SandBox
 
 
@@ -8,8 +10,8 @@ def home(request):
         if 'btn-tablet' in request.POST:
             print('btn-tab')
             sandbox.add()
-        elif 'btn-newprint' in request.POST:
-            print('btn-new')
+        elif 'btn-recipe-list' in request.POST:
+            print('btn-recipe-list')
         elif 'btn-delete' in request.POST:
             print('btn-del')
             sandbox.delete()
@@ -19,4 +21,6 @@ def home(request):
                     print(f"btn-question-{item['id']}")
                     sandbox.activate(question_id=item['id'])
                     break
-    return render(request, 'main/index.html', context={'sandbox': sandbox})
+
+    recipes = Recipe.objects.all()
+    return render(request, 'main/index.html', context={'recipes': recipes, 'sandbox': sandbox})
