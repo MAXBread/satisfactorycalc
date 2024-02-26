@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Recipe
+from .models import Recipe, Item
 from .sandbox import SandBox
 
 
@@ -22,5 +22,5 @@ def home(request):
                     sandbox.activate(question_id=item['id'])
                     break
 
-    recipes = Recipe.objects.all()
-    return render(request, 'main/index.html', context={'recipes': recipes, 'sandbox': sandbox})
+    items = Item.objects.all()
+    return render(request, 'main/index.html', context={'items': items, 'sandbox': sandbox})
