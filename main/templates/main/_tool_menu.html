@@ -1,0 +1,49 @@
+{% load static %}
+<div class="row border">
+    <div class="col-auto">
+        <form action="" method="post">
+            {% csrf_token %}
+        <div class="row border">
+            <div class="col-auto px-0">
+                <button type="submit" class="btn-secondary border-0" name="btn-tablet">
+                    <img src="{% static 'main/tablet.png' %}" height="40px" class="img" alt="Responsive image" >
+                </button>
+            </div>
+
+            <div class="col-auto px-0">
+                <button type="button" class="btn-secondary border-0" name="btn-recipe-list" id="btn-recipe-list" onclick="buttonrecipelist()">
+                    <img src="{% static 'main/newprint.png' %}" height="40px" class="img" alt="Responsive image">
+                </button>
+            </div>
+
+            <div class="col-auto px-0">
+                <button type="submit" class="btn-secondary border-0" name="btn-delete">
+                    <img src="{% static 'main/delete.png' %}" height="40px" class="img" alt="Responsive image">
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+        <div class="col">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row border">
+            {% for sand in sandbox.sandbox %}
+                {% if sand.craft is None %}
+                    <div class="col-auto px-0">
+                        {% if sand.active%}
+                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ sand.id }}">
+                        {% else %}
+                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ sand.id }}">
+                        {% endif %}
+                                <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
+                            </button>
+                    </div>
+                {% else %}
+                    CRAFT
+                {% endif %}
+            {% endfor %}
+            </div>
+        </form>
+        </div>
+</div>

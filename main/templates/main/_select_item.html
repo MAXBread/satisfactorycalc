@@ -1,0 +1,21 @@
+<div class="row">
+    <label for="select_box"></label>
+    <select name="select_box" class="form-select" id="select_box">
+        <option value="">Select Item</option>
+        {% for item in items %}
+            <option value="{{ item.id }}">{{ item.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<form action="" method="post">
+{% csrf_token %}
+<div class="row">
+    {% for item in items %}
+        <div class="col-auto px-0">
+            <button type="submit" class="btn-secondary border-0" name="item-{{ item.id }}">
+                <img src="{{ item.image.url }}" height="60px" class="img" alt="Responsive image">
+            </button>
+        </div>
+    {% endfor %}
+</div>
+</form>

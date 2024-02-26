@@ -1,89 +1,23 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block body %}
-
-<div class="row border">
-    <div class="col-auto">
-        <form action="" method="post">
-            {% csrf_token %}
-        <div class="row border">
-            <div class="col-auto px-0">
-                <button type="submit" class="btn-secondary border-0" name="btn-tablet">
-                    <img src="{% static 'main/tablet.png' %}" height="40px" class="img" alt="Responsive image" >
-                </button>
-            </div>
-
-            <div class="col-auto px-0">
-                <button type="button" class="btn-secondary border-0" name="btn-recipe-list" id="btn-recipe-list" onclick="buttonrecipelist()">
-                    <img src="{% static 'main/newprint.png' %}" height="40px" class="img" alt="Responsive image">
-                </button>
-            </div>
-
-            <div class="col-auto px-0">
-                <button type="submit" class="btn-secondary border-0" name="btn-delete">
-                    <img src="{% static 'main/delete.png' %}" height="40px" class="img" alt="Responsive image">
-                </button>
-            </div>
-        </div>
-        </form>
-    </div>
-        <div class="col">
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class="row border">
-            {% for sand in sandbox.sandbox %}
-                {% if sand.craft is None %}
-                    <div class="col-auto px-0">
-                        {% if sand.active%}
-                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ sand.id }}">
-                        {% else %}
-                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ sand.id }}">
-                        {% endif %}
-                                <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
-                            </button>
-                    </div>
-                {% else %}
-                    CRAFT
-                {% endif %}
-            {% endfor %}
-            </div>
-        </form>
-        </div>
-</div>
-
+    
+{{ tool_menu }}
+{% include "main/_tool_menu.html" with tool_menu="tool_menu" %}
 <div class=" row border">
     {{ product_block }}
-    {% include "main/_production_block.html" with product_block="product_block" %}
+    {% include "main/_product_block.html" with product_block="product_block" %}
 </div>
 <div class="row">
     <div class="col border" id="itemlist" style="display: none">
-        <div class="row">
-            <label for="select_box"></label>
-            <select name="select_box" class="form-select" id="select_box">
-                <option value="">Select Item</option>
-                {% for item in items %}
-                    <option value="{{ item.id }}">{{ item.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <form action="" method="post">
-        {% csrf_token %}
-        <div class="row">
-            {% for item in items %}
-                <div class="col-auto px-0">
-                    <button type="submit" class="btn-secondary border-0" name="item-{{ item.id }}">
-                        <img src="{{ item.image.url }}" height="60px" class="img" alt="Responsive image">
-                    </button>
-                </div>
-            {% endfor %}
-        </div>
-        </form>
+        {{ select_item }}
+        {% include "main/_select_item.html" with select_item="select_item" %}
     </div>
     <div class="col border">
-        asdasd
+        {{ product_line }}
+        {% include "main/_product_line.html" with product_line="product_line" %}
     </div>
 </div>
-
 {% endblock body %}
 {% block scripts %}
 <script src="{% static 'js/dselect.js' %}"></script>
