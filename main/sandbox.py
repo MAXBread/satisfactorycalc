@@ -1,4 +1,23 @@
 from django.http import HttpRequest
+from dataclasses import dataclass, asdict
+
+
+@dataclass
+class RecipeLine:
+    recipe_id: int
+    factory_id: int
+    product_dict: dict
+    ingredient_dict: dict
+
+
+@dataclass
+class ProductLine:
+    output: list
+    input: list
+    recipes: list[RecipeLine]
+
+    def product_to_dict(self) -> dict:
+        return asdict(self)
 
 
 class SandBox:

@@ -1,7 +1,8 @@
+
 <div class="row">
     <label for="select_box"></label>
     <select name="select_box" class="form-select" id="select_box">
-        <option value="">Select Item</option>
+        <option class="" value="">Select Item</option>
         {% for item in items %}
             <option value="{{ item.id }}">{{ item.name }}</option>
         {% endfor %}
