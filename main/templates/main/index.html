@@ -9,15 +9,20 @@
     {% include "main/_product_block.html" with product_block="product_block" %}
 </div>
 <div class="row">
-    <div class="col border" id="itemlist" style="display: none">
+    <div class="col-auto border" id="itemlist" style="">
         {{ select_item }}
         {% include "main/_select_item.html" with select_item="select_item" %}
     </div>
     <div class="col border">
-        {{ product_line }}
-        {% include "main/_product_line.html" with product_line="product_line" %}
+        {{ prod_l }}
+        {% include "main/_product_line.html" with prod_l="product_line" %}
     </div>
 </div>
+    
+{% for line in sandbox.product_line %}
+    {{ line }}<br>
+{% endfor %}
+   asdasdasd 
 {% endblock body %}
 {% block scripts %}
 <script src="{% static 'js/dselect.js' %}"></script>

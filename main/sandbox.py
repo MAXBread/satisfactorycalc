@@ -1,64 +1,40 @@
 from django.http import HttpRequest
-from dataclasses import dataclass, asdict
-
-
-@dataclass
-class RecipeLine:
-    recipe_id: int
-    factory_id: int
-    product_dict: dict
-    ingredient_dict: dict
-
-
-@dataclass
-class ProductLine:
-    output: list
-    input: list
-    recipes: list[RecipeLine]
-
-    def product_to_dict(self) -> dict:
-        return asdict(self)
+from .session_data import ProductLine
 
 
 class SandBox:
     def __init__(self, request: HttpRequest):
         self.session = request.session
-        if 'session_key' not in request.session:
-            self.sandbox = self.session['session_key'] = []
+        if 'product_line' not in request.session:
+            self.product_line = self.session['product_line'] = []
         else:
-            self.sandbox = self.session.get('session_key')
+            self.product_line = self.session.get('product_line')
 
     def __len__(self):
-        return len(self.sandbox.values())   # test variant
+        return len(self.product_line.values())   # test variant
 
     def add(self):
         max_id = 0
-        for item in self.sandbox:
-            if item['id'] > max_id:
-                max_id = item['id']
-
-        for item in self.sandbox:
-            self.sandbox[item['id'] - 1]['active'] = False
-        self.sandbox.append({'craft': None, 'id': max_id+1, 'active': True})
+        for n, item in enumerate(self.product_line):
+            if item['block_id'] > max_id:
+                max_id = item['block_id']
+            self.product_line[n]['block_active'] = False
+        self.product_line.append(ProductLine(block_id=max_id+1, block_active=True, block_list=[]).product_to_dict())
         self.session.modified = True
 
     def activate(self, question_id: int) -> None:
-        for i, item in enumerate(self.sandbox):
-            if item['id'] == question_id:
-                self.sandbox[i]['active'] = True
+        for n, item in enumerate(self.product_line):
+            if item['block_id'] == question_id:
+                self.product_line[n]['block_active'] = True
             else:
-                self.sandbox[i]['active'] = False
+                self.product_line[n]['block_active'] = False
         self.session.modified = True
 
     def delete(self) -> None:
-        print(self.sandbox)
-        for i, item in enumerate(self.sandbox):
-            if item['active']:
-                print(item)
-                print(i)
-                self.sandbox.remove(item)
+        for n, item in enumerate(self.product_line):
+            if item['block_active']:
+                self.product_line.remove(item)
                 break
-        if len(self.sandbox) != 0:
-            self.sandbox[len(self.sandbox) - 1]['active'] = True
+        if len(self.product_line) != 0:
+            self.product_line[len(self.product_line) - 1]['block_active'] = True
         self.session.modified = True
-

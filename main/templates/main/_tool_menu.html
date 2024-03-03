@@ -28,13 +28,13 @@
         <form action="" method="post">
             {% csrf_token %}
             <div class="row border">
-            {% for sand in sandbox.sandbox %}
-                {% if sand.craft is None %}
+            {% for line in sandbox.product_line %}
+                {% if line.block_list|length == 0 %}
                     <div class="col-auto px-0">
-                        {% if sand.active%}
-                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ sand.id }}">
+                        {% if line.block_active %}
+                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ line.block_id }}">
                         {% else %}
-                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ sand.id }}">
+                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ line.block_id }}">
                         {% endif %}
                                 <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
                             </button>
