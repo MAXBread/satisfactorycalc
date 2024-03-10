@@ -40,7 +40,15 @@
                             </button>
                     </div>
                 {% else %}
-                    CRAFT
+                     <div class="col-auto px-0">
+                        {% if line.block_active %}
+                            <button type="submit" class="btn-warning border-0" name="btn-question-{{ line.block_id }}">
+                        {% else %}
+                            <button type="submit" class="btn-secondary border-0" name="btn-question-{{ line.block_id }}">
+                        {% endif %}
+                                <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
+                            </button>
+                    </div>
                 {% endif %}
             {% endfor %}
             </div>

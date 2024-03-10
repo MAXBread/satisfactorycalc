@@ -4,6 +4,8 @@
     
 {{ tool_menu }}
 {% include "main/_tool_menu.html" with tool_menu="tool_menu" %}
+
+{% if sandbox.product_line|length != 0 %}
 <div class=" row border">
     {{ product_block }}
     {% include "main/_product_block.html" with product_block="product_block" %}
@@ -18,7 +20,8 @@
         {% include "main/_product_line.html" with prod_l="product_line" %}
     </div>
 </div>
-    
+{% endif %}
+
 {% for line in sandbox.product_line %}
     {{ line }}<br>
 {% endfor %}

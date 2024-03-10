@@ -1,4 +1,5 @@
 from dataclasses import dataclass, asdict, field
+from .models import Recipe
 
 
 @dataclass
@@ -7,6 +8,7 @@ class Block:
     factory_id: int
     input_dict: dict
     output_dict: dict
+    # r: Recipe
 
 
 @dataclass
@@ -47,11 +49,12 @@ class ProductLine:
     @staticmethod
     def dict_to_product(dict_product):
         # TODO: check if dict empty
-        dict_product.pop('input')
-        dict_product.pop('output')
-        block_list = dict_product.pop('block_list')
+        product_copy = dict_product.copy()
+        product_copy.pop('input')
+        product_copy.pop('output')
+        block_list = product_copy.pop('block_list')
         blocks = [Block(**block) for block in block_list]
-        return ProductLine(block_list=blocks)
+        return ProductLine(block_id=product_copy['block_id'], block_active=product_copy['block_active'], block_list=blocks)
 
     def add_recipe(self, recipe_id: int, factory_id: int, input_dict: dict, output_dict: dict):
         recipe = Block(recipe_id=recipe_id, factory_id=factory_id, input_dict=input_dict, output_dict=output_dict)
