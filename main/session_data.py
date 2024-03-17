@@ -1,5 +1,4 @@
 from dataclasses import dataclass, asdict, field
-from .models import Recipe
 
 
 @dataclass
@@ -8,7 +7,8 @@ class Block:
     factory_id: int
     input_dict: dict
     output_dict: dict
-    # r: Recipe
+    quantity_factory: int
+    # TODO: quantity_factory and choose fabric or factory
 
 
 @dataclass
@@ -57,7 +57,7 @@ class ProductLine:
         return ProductLine(block_id=product_copy['block_id'], block_active=product_copy['block_active'], block_list=blocks)
 
     def add_recipe(self, recipe_id: int, factory_id: int, input_dict: dict, output_dict: dict):
-        recipe = Block(recipe_id=recipe_id, factory_id=factory_id, input_dict=input_dict, output_dict=output_dict)
+        recipe = Block(recipe_id=recipe_id, factory_id=factory_id, input_dict=input_dict, output_dict=output_dict, quantity_factory=0)
         self.block_list.append(recipe)
         self.calc_output()
         self.calc_input()

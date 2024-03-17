@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Recipe, Item
+from .models import Recipe, Item, VariantOutput, Fabric
 from .sandbox import SandBox
 
 
@@ -26,8 +26,15 @@ def home(request):
                 if f"item-{item.id}" in request.POST:
                     print(f"item-{item.id}")
                     print(item.name)
-                    recipe = Recipe(name=item.name)
-                    # sandbox.add_recipe(recipe=recipe)
+                    variant_output = VariantOutput.objects.filter(product_id=item.id)
+                    if variant_output:
+                        recipe = Recipe.objects.filter(output__in=variant_output).first()
+                        # TODO: some recipes
+                        if recipe:
+                            sandbox.add_recipe(recipe=recipe)
+                    else:
+                        # TODO: no variants
+                        print('no variant output !!!')
                     break
 
     return render(request, 'main/index.html', context={'items': items, 'sandbox': sandbox})

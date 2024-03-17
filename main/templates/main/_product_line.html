@@ -1,52 +1,57 @@
-<div class="row">
-    <div class="col border">
-            recipe
-        <div class="col">
-            air
-        </div>
-    </div>
-    <div class="col border">
-            fact
-        <div class="col">
-            quant f
-        </div>
-    </div>
-    <div class="col border">
-            output1
-        <div class="col">
-            quant o1
-        </div>
-    </div>
-    <div class="col border">
-            output2
-        <div class="col">
-            quant o2
-        </div>
-    </div>
-    <div class="col border">
-            output3
-        <div class="col">
-            quant o3
-        </div>
-    </div>
-    <div class="col border">
-            input1
-        <div class="col">
-            quant i1
-        </div>
-    </div>
-    <div class="col border">
-            input2
-        <div class="col">
-            quant i2
-        </div>
-    </div>
-    <div class="col border">
-            input3
-        <div class="col">
-            quant i3
-        </div>
-    </div>
-</div>
+{% load mathfilters %}
+{% load main_tags %}
+
+{% for line in sandbox.product_line %}
+    {% if line.block_active %}
+        {% for block in line.block_list %}
+            <div class="row">
+                <div class="col border">
+                    recipe id(img)
+                    {{ block.recipe_id }}
+                </div>
+                <div class="col border">
+                     <img src="{% factory_image_url block.factory_id %}" height="65px" class="img" alt="Responsive image">
+                    <div class="row justify-content-center border-top">
+                        {{ block.quantity_factory }}
+                    </div>
+                </div>
+            
+                {% for product_id, quantity in block.output_dict.items %}
+                    <div class="col border">
+                        <img src="{% item_image_url product_id %}" height="65px" class="img" alt="Responsive image">
+                        <div class="row justify-content-center border-top">
+                            {{ quantity }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% with block.output_dict|length as l %}
+                    {% with 4|sub:l as n %}
+                        {% for _ in ''|center:n %}
+                            <div class="col border">
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                {% endwith %}
+            
+                {% for product_id, quantity in block.input_dict.items %}
+                    <div class="col justify-content-center border">
+                        <img src="{% item_image_url product_id %}" height="65px" class="img" alt="Responsive image">
+                        <div class="row justify-content-center border">
+                            {{ quantity }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% with block.input_dict|length as l %}
+                    {% with 4|sub:l as n %}
+                        {% for _ in ''|center:n %}
+                            <div class="col border">
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                {% endwith %}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
 
 

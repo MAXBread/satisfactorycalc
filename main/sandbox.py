@@ -8,16 +8,12 @@ class SandBox:
     def __init__(self, request: HttpRequest):
         self.session = request.session
         if 'product_line' not in request.session:
-            self.product_line1 = self.session['product_line'] = []
+            session_data = self.session['product_line'] = []
         else:
-            self.product_line1 = self.session.get('product_line')
+            session_data = self.session.get('product_line')
         self.product_line = []
-        for block in self.product_line1:
+        for block in session_data:
             self.product_line.append(ProductLine.dict_to_product(block))
-        print(self.product_line)
-        print('!!!!!!!!!!')
-        print(self.product_line1)
-        print([b.product_to_dict() for b in self.product_line])
 
     def __len__(self):
         return len(self.product_line)
@@ -54,13 +50,20 @@ class SandBox:
             self.product_line[len(self.product_line) - 1].block_active = True
         self.session_save()
 
-    '''
     def add_recipe(self, recipe: Recipe) -> None:
         print(recipe)
-        for n, item in enumerate(self.product_line):
-            if item['block_active']:
-                self.product_line[n]['block_list'].append(Block(recipe_id=recipe.id, factory_id=recipe.fabric.,input_dict={}, output_dict={}))
-    '''
-
-# self.product_line[n]['block_list'].append(Block(recipe_id=recipe.id, factory_id=recipe.fabric.id,
-#                                                             input_dict=recipe.input, output_dict=recipe.output))
+        for n, block in enumerate(self.product_line):
+            if block.block_active:
+                print('###########')
+                print(recipe.input.all())
+                input_dict = {r.product_id: float(r.quantity) for r in recipe.input.all()}
+                output_dict = {r.product_id: float(r.quantity) for r in recipe.output.all()}
+                print(output_dict)
+                new_block = Block(recipe_id=recipe.id, factory_id=recipe.fabric.id, input_dict=input_dict,
+                                  output_dict=output_dict, quantity_factory=0)
+                print(new_block)
+                self.product_line[n].block_list.append(new_block)
+                self.product_line[n].calc_input()
+                self.product_line[n].calc_output()
+                self.session_save()
+                break
