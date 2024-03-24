@@ -14,7 +14,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'fabric')
+    list_display = ('name', 'fabric', 'base_item')
 
 
 @admin.register(VariantInput)

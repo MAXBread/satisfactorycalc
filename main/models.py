@@ -38,6 +38,7 @@ class Recipe (models.Model):
     fabric = models.ForeignKey(Fabric, on_delete=models.SET_NULL, null=True)
     input = models.ManyToManyField(VariantInput, blank=True)
     output = models.ManyToManyField(VariantOutput, blank=True)
+    base_item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

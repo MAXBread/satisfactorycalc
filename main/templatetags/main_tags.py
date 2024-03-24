@@ -1,5 +1,5 @@
 from django import template
-from main.models import Fabric, Item
+from main.models import Fabric, Item, Recipe
 
 register = template.Library()
 
@@ -14,3 +14,9 @@ def factory_image_url(factory_id: int):
 def item_image_url(item_id: int):
     item = Item.objects.get(id=item_id)
     return item.item_image.url
+
+
+@register.simple_tag
+def recipe_image_url(recipe_id: int):
+    recipe = Recipe.objects.get(id=recipe_id)
+    return recipe.base_item.item_image.url

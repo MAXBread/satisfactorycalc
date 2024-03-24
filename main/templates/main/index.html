@@ -30,14 +30,7 @@
 {% block scripts %}
 <script src="{% static 'js/dselect.js' %}"></script>
 <script type="text/javascript">
-    function buttonrecipelist(){
-        let value = document.getElementById("itemlist").style.display;
-        if (value){
-            document.getElementById("itemlist").style.removeProperty("display");
-        } else {
-            document.getElementById("itemlist").style.display = "none";
-        }
-    }
+
     
     let select_box_element = document.querySelector('#select_box');
     dselect(select_box_element, {

@@ -1,4 +1,6 @@
 {% load static %}
+{% load main_tags %}
+
 <div class="row border">
     <div class="col-auto">
         <form action="" method="post">
@@ -9,13 +11,6 @@
                     <img src="{% static 'main/tablet.png' %}" height="40px" class="img" alt="Responsive image" >
                 </button>
             </div>
-
-            <div class="col-auto px-0">
-                <button type="button" class="btn-secondary border-0" name="btn-recipe-list" id="btn-recipe-list" onclick="buttonrecipelist()">
-                    <img src="{% static 'main/newprint.png' %}" height="40px" class="img" alt="Responsive image">
-                </button>
-            </div>
-
             <div class="col-auto px-0">
                 <button type="submit" class="btn-secondary border-0" name="btn-delete">
                     <img src="{% static 'main/delete.png' %}" height="40px" class="img" alt="Responsive image">
@@ -46,7 +41,7 @@
                         {% else %}
                             <button type="submit" class="btn-secondary border-0" name="btn-question-{{ line.block_id }}">
                         {% endif %}
-                                <img src="{% static 'main/question.png' %}" height="40px" class="img" alt="Responsive image">
+                                <img src="{% recipe_image_url line.block_list.0.recipe_id %}" height="40px" class="img" alt="Responsive image">
                             </button>
                     </div>
                 {% endif %}

@@ -6,16 +6,17 @@
         {% for block in line.block_list %}
             <div class="row">
                 <div class="col border">
-                    recipe id(img)
+                    <img src="{% recipe_image_url block.recipe_id %}" height="65px" class="img" alt="Responsive image">
+                    <div class="row justify-content-center border-top">
                     {{ block.recipe_id }}
+                    </div>
                 </div>
                 <div class="col border">
-                     <img src="{% factory_image_url block.factory_id %}" height="65px" class="img" alt="Responsive image">
+                    <img src="{% factory_image_url block.factory_id %}" height="65px" class="img" alt="Responsive image">
                     <div class="row justify-content-center border-top">
                         {{ block.quantity_factory }}
                     </div>
                 </div>
-            
                 {% for product_id, quantity in block.output_dict.items %}
                     <div class="col border">
                         <img src="{% item_image_url product_id %}" height="65px" class="img" alt="Responsive image">

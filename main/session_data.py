@@ -8,7 +8,7 @@ class Block:
     input_dict: dict
     output_dict: dict
     quantity_factory: int
-    # TODO: quantity_factory and choose fabric or factory
+    # TODO: choose fabric or factory
 
 
 @dataclass
