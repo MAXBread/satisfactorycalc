@@ -18,6 +18,14 @@ class SandBox:
     def __len__(self):
         return len(self.product_line)
 
+    def get_active_product_line(self) -> ProductLine | None:
+        line = None
+        for product_line in self.product_line:
+            if product_line.block_active:
+                line = product_line
+                break
+        return line
+
     def session_save(self):
         self.session['product_line'] = [b.product_to_dict() for b in self.product_line]
         self.session.modified = True
@@ -29,8 +37,6 @@ class SandBox:
                 max_id = block.block_id
             self.product_line[n].block_active = False
         self.product_line.append(ProductLine(block_id=max_id + 1, block_active=True, block_list=[]))
-        print('$$$$$$')
-        print(self.product_line)
         self.session_save()
 
     def activate(self, block_id: int) -> None:
@@ -51,17 +57,12 @@ class SandBox:
         self.session_save()
 
     def add_recipe(self, recipe: Recipe) -> None:
-        print(recipe)
         for n, block in enumerate(self.product_line):
             if block.block_active:
-                print('###########')
-                print(recipe.input.all())
                 input_dict = {r.product_id: float(r.quantity) for r in recipe.input.all()}
                 output_dict = {r.product_id: float(r.quantity) for r in recipe.output.all()}
-                print(output_dict)
                 new_block = Block(recipe_id=recipe.id, factory_id=recipe.fabric.id, input_dict=input_dict,
-                                  output_dict=output_dict, quantity_factory=0)
-                print(new_block)
+                                  output_dict=output_dict, quantity_factory=1)
                 self.product_line[n].block_list.append(new_block)
                 self.product_line[n].calc_input()
                 self.product_line[n].calc_output()

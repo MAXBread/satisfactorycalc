@@ -37,4 +37,17 @@ def home(request):
                         print('no variant output !!!')
                     break
 
+            product_line = sandbox.get_active_product_line()
+            if product_line:
+                for block_num in range(len(product_line.block_list)):
+                    if f"up-arrow-{block_num}" in request.POST:
+                        print(f"up-arrow-{block_num}")
+                        break
+                    if f"down-arrow-{block_num}" in request.POST:
+                        print(f"down-arrow-{block_num}")
+                        break
+                    if f"close-{block_num}" in request.POST:
+                        print(f"close-{block_num}")
+                        break
+
     return render(request, 'main/index.html', context={'items': items, 'sandbox': sandbox})

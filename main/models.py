@@ -4,6 +4,7 @@ from django.db import models
 class Fabric (models.Model):
     name = models.CharField(max_length=30, db_index=True, unique=True)
     fabric_image = models.ImageField(upload_to='icons/fabrics')
+    # TODO: fabric > factory
 
     def __str__(self):
         return self.name
@@ -39,6 +40,7 @@ class Recipe (models.Model):
     input = models.ManyToManyField(VariantInput, blank=True)
     output = models.ManyToManyField(VariantOutput, blank=True)
     base_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    # TODO: fabric > factory
 
     def __str__(self):
         return self.name

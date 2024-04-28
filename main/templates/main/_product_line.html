@@ -1,10 +1,42 @@
 {% load mathfilters %}
 {% load main_tags %}
+{% load static %}
+
+<form action="" method="post">
+{% csrf_token %}
 
 {% for line in sandbox.product_line %}
     {% if line.block_active %}
         {% for block in line.block_list %}
+            
             <div class="row">
+            
+                    <div class="col-auto border-top border-bottom">
+                        <div class="row">
+                            <button type="submit" class="btn-secondary border-0 p-1" name="up-arrow-{{ forloop.counter0 }}" style="width: 40px">
+                                <img src="{% static 'main/up-arrow.png' %}" height="32px" width="32px" class="img" alt="Responsive image">
+                            </button>
+                        </div>
+                        <div class="row">
+                             <button type="submit" class="btn-secondary border-0 p-1" name="down-arrow-{{ forloop.counter0 }}" style="width: 40px">
+                                 <img src="{% static 'main/down-arrow.png' %}" height="32px" width="32px" class="img" alt="Responsive image">
+                             </button> 
+                        </div>
+                    </div>
+                    <div class="col-auto border-top border-bottom border-end">
+                        <div class="row">
+                             <button type="submit" class="btn-secondary border-0 p-1" name="close-{{ forloop.counter0 }}" style="width: 40px">
+                                 <img src="{% static 'main/close.png' %}" height="32px" width="32px" class="img" alt="Responsive image">
+                             </button> 
+                        </div>
+                        <div class="row">
+                             <button type="submit" class="btn-secondary border-0 p-1" name="" style="width: 40px">
+                                 <img src="{% static 'main/check-mark.png' %}" height="32px" width="32px" class="img" alt="Responsive image">
+                             </button> 
+                        </div>
+                    </div>
+               
+            
                 <div class="col border">
                     <img src="{% recipe_image_url block.recipe_id %}" height="65px" class="img" alt="Responsive image">
                     <div class="row justify-content-center border-top">
@@ -55,4 +87,5 @@
     {% endif %}
 {% endfor %}
 
+</form>
 
