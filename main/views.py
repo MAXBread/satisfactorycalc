@@ -22,6 +22,8 @@ def home(request):
                     print(f"btn-question-{block.block_id}")
                     sandbox.activate(block_id=block.block_id)
                     break
+            if 'select_item' in request.POST:
+                print('select_item')
             for item in items:
                 if f"item-{item.id}" in request.POST:
                     print(f"item-{item.id}")
@@ -42,12 +44,15 @@ def home(request):
                 for block_num in range(len(product_line.block_list)):
                     if f"up-arrow-{block_num}" in request.POST:
                         print(f"up-arrow-{block_num}")
+                        sandbox.recipe_up(block_num)
                         break
                     if f"down-arrow-{block_num}" in request.POST:
                         print(f"down-arrow-{block_num}")
+                        sandbox.recipe_down(block_num)
                         break
                     if f"close-{block_num}" in request.POST:
                         print(f"close-{block_num}")
+                        sandbox.recipe_del(block_num)
                         break
 
     return render(request, 'main/index.html', context={'items': items, 'sandbox': sandbox})

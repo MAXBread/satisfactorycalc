@@ -68,3 +68,35 @@ class SandBox:
                 self.product_line[n].calc_output()
                 self.session_save()
                 break
+
+    def recipe_up(self, block_num):
+        if block_num != 0:
+            for n, block in enumerate(self.product_line):
+                if block.block_active:
+                    element_up = self.product_line[n].block_list.pop(block_num)
+                    self.product_line[n].block_list.insert(block_num - 1, element_up)
+                    self.product_line[n].calc_input()
+                    self.product_line[n].calc_output()
+                    self.session_save()
+                    break
+
+    def recipe_down(self, block_num):
+        for n, block in enumerate(self.product_line):
+            if block.block_active:
+                if block_num == len(self.product_line[n].block_list) - 1:
+                    return
+                element_down = self.product_line[n].block_list.pop(block_num)
+                self.product_line[n].block_list.insert(block_num + 1, element_down)
+                self.product_line[n].calc_input()
+                self.product_line[n].calc_output()
+                self.session_save()
+                break
+
+    def recipe_del(self, block_num):
+        for n, block in enumerate(self.product_line):
+            if block.block_active:
+                self.product_line[n].block_list.pop(block_num)
+                self.product_line[n].calc_input()
+                self.product_line[n].calc_output()
+                self.session_save()
+                break

@@ -9,7 +9,7 @@ class Block:
     input_dict: dict
     output_dict: dict
     quantity_factory: int
-    # TODO: fabric > factory
+    # TODO: fabric incorrect
 
     def __post_init__(self):
         self.calc_output()
@@ -73,41 +73,3 @@ class ProductLine:
                                         quantity_factory=block['quantity_factory']))
         return ProductLine(block_id=product_copy['block_id'], block_active=product_copy['block_active'],
                            block_list=new_block_list)
-
-    '''
-    def add_recipe(self, recipe_id: int, factory_id: int, input_dict: dict, output_dict: dict):
-        recipe = Block(recipe_id=recipe_id, factory_id=factory_id, input_dict=input_dict, output_dict=output_dict, quantity_factory=0)
-        self.block_list.append(recipe)
-        self.calc_output()
-        self.calc_input()
-    '''
-
-    def del_recipe(self, recipe_id: int):
-        for block in self.block_list:
-            if block.recipe_id == recipe_id:
-                self.block_list.remove(block)
-                break
-        self.calc_output()
-        self.calc_input()
-
-    def move_up_recipe(self, recipe_id: int):
-        if len(self.block_list) > 1:
-            num = 0
-            for i, block in enumerate(self.block_list):
-                if block.recipe_id == recipe_id:
-                    num = i
-                    break
-            if num != 0:
-                prev_element = self.block_list.pop(num - 1)
-                self.block_list.insert(num, prev_element)
-
-    def move_down_recipe(self, recipe_id: int):
-        if len(self.block_list) > 1:
-            num = 0
-            for i, block in enumerate(self.block_list):
-                if block.recipe_id == recipe_id:
-                    num = i
-                    break
-            if num != len(self.block_list) - 1:
-                element = self.block_list.pop(num)
-                self.block_list.insert(num + 1, element)
