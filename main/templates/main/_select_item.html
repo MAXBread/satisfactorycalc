@@ -2,14 +2,16 @@
 {% csrf_token %}
 <div class="row">
     <label for="select_box"></label>
-    <select name="select_item" class="form-select" id="select_box">
+    <select name="select_item" class="form-select" id="select_box" onchange="this.form.submit()">
         <option class="" value="">Select Item</option>
         {% for item in items %}
             <option value="{{ item.id }}">{{ item.name }}</option>
         {% endfor %}
     </select>
 </div>
-
+</form>
+<form action="{% url 'home' %}" method="post">
+{% csrf_token %}
 <div class="row" style="width: 240px">
     {% for item in items %}
         <div class="col-auto px-0">

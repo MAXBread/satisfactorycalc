@@ -4,6 +4,18 @@ from .models import Recipe, Item, VariantOutput, Fabric
 from .sandbox import SandBox
 
 
+def add_item_to_product_line(add_sandbox, item_id):
+    variant_output = VariantOutput.objects.filter(product_id=int(item_id))
+    if variant_output:
+        recipe = Recipe.objects.filter(output__in=variant_output).first()
+        # TODO: some recipes
+        if recipe:
+            add_sandbox.add_recipe(recipe=recipe)
+    else:
+        # TODO: no variants
+        print('no variant output !!!')
+
+
 def home(request):
     sandbox = SandBox(request=request)
     items = Item.objects.all()
@@ -23,20 +35,13 @@ def home(request):
                     sandbox.activate(block_id=block.block_id)
                     break
             if 'select_item' in request.POST:
-                print('select_item')
+                item_id = request.POST['select_item']
+                add_item_to_product_line(sandbox, item_id)
             for item in items:
                 if f"item-{item.id}" in request.POST:
                     print(f"item-{item.id}")
                     print(item.name)
-                    variant_output = VariantOutput.objects.filter(product_id=item.id)
-                    if variant_output:
-                        recipe = Recipe.objects.filter(output__in=variant_output).first()
-                        # TODO: some recipes
-                        if recipe:
-                            sandbox.add_recipe(recipe=recipe)
-                    else:
-                        # TODO: no variants
-                        print('no variant output !!!')
+                    add_item_to_product_line(sandbox, item.id)
                     break
 
             product_line = sandbox.get_active_product_line()
