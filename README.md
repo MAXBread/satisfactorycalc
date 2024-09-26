@@ -79,3 +79,10 @@ session_k.get_decoded()
 ```
 
 {'session_key': {}}
+
+### git
+```
+git config --local user.name ""
+git config --local user.email ""
+git remote set-url origin https://oauth2:    @
+```

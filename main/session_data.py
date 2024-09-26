@@ -53,6 +53,23 @@ class ProductLine:
                     product_dict[product] = product_dict[product] + quantity * block.quantity_factory
         self.output = product_dict
 
+    def calc_total(self) -> None:
+        product_dict_output = {}
+        product_dict_input = {}
+        for block in self.block_list.reverse():
+            for product, quantity in block.input_dict.items():
+                if product not in product_dict_input:
+                    product_dict_input[product] = quantity * block.quantity_factory
+                else:
+                    product_dict_input[product] = product_dict_input[product] + quantity * block.quantity_factory
+
+            for product, quantity in block.output_dict.items():
+                if product not in product_dict_output:
+                    product_dict_output[product] = quantity * block.quantity_factory
+                else:
+                    product_dict_output[product] = product_dict_output[product] + quantity * block.quantity_factory
+
+
     def product_to_dict(self) -> dict:
         return asdict(self)
 
